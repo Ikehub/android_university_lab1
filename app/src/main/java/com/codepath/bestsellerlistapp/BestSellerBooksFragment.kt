@@ -1,5 +1,6 @@
 package com.codepath.bestsellerlistapp
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,17 +29,17 @@ class BestSellerBooksFragment : Fragment(), OnListFragmentInteractionListener {
         val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView
         val context = view.context
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        updateAdapter(progressBar, recyclerView)
+        updateAdapter(progressBar, recyclerView, context)
         return view
     }
 
-    private fun updateAdapter(progressBar: ContentLoadingProgressBar, recyclerView: RecyclerView) {
+    private fun updateAdapter(progressBar: ContentLoadingProgressBar, recyclerView: RecyclerView, context: Context) {
         progressBar.show()
         val nyTimesApiClient = NYTimesApiClient()
         nyTimesApiClient.getBestSellersList(object : CallbackResponse<List<BestSellerBook>> {
             override fun onSuccess(models: List<BestSellerBook>) {
                 progressBar.hide()
-                recyclerView.adapter = BestSellerBooksRecyclerViewAdapter(models, this@BestSellerBooksFragment)
+                recyclerView.adapter = BestSellerBooksRecyclerViewAdapter(models, this@BestSellerBooksFragment, context)
                 Log.d("BestSellerBooksFragment", "response successful")
             }
 
