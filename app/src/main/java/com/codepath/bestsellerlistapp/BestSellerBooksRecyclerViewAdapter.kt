@@ -22,8 +22,7 @@ import com.codepath.bestsellerlistapp.models.BestSellerBook
  */
 class BestSellerBooksRecyclerViewAdapter(
     private val books: List<BestSellerBook>,
-    private val mListener: OnListFragmentInteractionListener?,
-    private val context: Context
+    private val mListener: OnListFragmentInteractionListener?
 ) : Adapter<BookViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,8 +36,9 @@ class BestSellerBooksRecyclerViewAdapter(
         holder.mBookAuthor.text = books[position].author
         holder.mBookRank.text = books[position].rank.toString()
         holder.mBookDescription.text = books[position].description
-        Glide.with(context)
+        Glide.with(holder.mView)
             .load(books[position].bookImageUrl)
+            .centerInside()
             .into(holder.mBookImage)
         holder.mView.setOnClickListener {
             holder.mItem?.let { book ->

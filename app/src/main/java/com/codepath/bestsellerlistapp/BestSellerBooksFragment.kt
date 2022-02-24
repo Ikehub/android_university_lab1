@@ -29,17 +29,17 @@ class BestSellerBooksFragment : Fragment(), OnListFragmentInteractionListener {
         val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView
         val context = view.context
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        updateAdapter(progressBar, recyclerView, context)
+        updateAdapter(progressBar, recyclerView)
         return view
     }
 
-    private fun updateAdapter(progressBar: ContentLoadingProgressBar, recyclerView: RecyclerView, context: Context) {
+    private fun updateAdapter(progressBar: ContentLoadingProgressBar, recyclerView: RecyclerView) {
         progressBar.show()
         val nyTimesApiClient = NYTimesApiClient()
         nyTimesApiClient.getBestSellersList(object : CallbackResponse<List<BestSellerBook>> {
             override fun onSuccess(models: List<BestSellerBook>) {
                 progressBar.hide()
-                recyclerView.adapter = BestSellerBooksRecyclerViewAdapter(models, this@BestSellerBooksFragment, context)
+                recyclerView.adapter = BestSellerBooksRecyclerViewAdapter(models, this@BestSellerBooksFragment)
                 Log.d("BestSellerBooksFragment", "response successful")
             }
 
